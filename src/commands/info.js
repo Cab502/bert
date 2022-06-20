@@ -24,7 +24,7 @@ module.exports = {
                         },
                         {
                             name: "Erstellt",
-                            value: `<t: ${Math.round(interaction.guild.createdTimestamp/1000)}>`,
+                            value: `<t:${Math.round(interaction.guild.createdTimestamp/1000)}>`,
                             inline: true
                         }
                     ])
