@@ -14,7 +14,7 @@ commandFiles.forEach(commandFile => {
 
 const restClient =  new REST({version: "10"}).setToken(process.env.DISCORD_BOT_TOKEN)
 
-restClient.put(Routes.applicationGuildCommands(process.env.DISCORD_APPLICATION_ID, process.env.DISCORD_GUILD_ID),
+restClient.put(Routes.applicationCommands(process.env.DISCORD_APPLICATION_ID),
  {body: commands})
 .then(() => console.log("SUCCESS: registered commands"))
 .catch(console.error)
