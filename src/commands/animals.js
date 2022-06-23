@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders")
 const { MessageEmbed } = require("discord.js")
 
 exports.data = new SlashCommandBuilder()
-    .setName("imSad")
+    .setName("imsad")
     .setDescription("sends you a cute image")
 
 exports.execute = async (interaction) => {
