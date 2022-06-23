@@ -1,8 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 const { MessageEmbed } = require("discord.js")
 
-module.exports = {
-    data: new SlashCommandBuilder()
+exports.data = new SlashCommandBuilder()
     .setName("info")
     .setDescription("User Informationen auslesen")
     .addSubcommand(subCommand => subCommand.setName("server").setDescription("Zeige Informationen über den Server an"))
@@ -11,7 +10,7 @@ module.exports = {
                         .setDescription("Zeige Informationen über einen Member an")
                         .addUserOption(option => option.setName("member")
                         .setDescription("Der Member").setRequired(true))), 
-    async execute(interaction) {
+exports.execute = async (interaction) => {
         switch(interaction.options.getSubcommand()){
             case "server": {
                 interaction.reply({embeds: [
@@ -54,4 +53,3 @@ module.exports = {
             }
         }
     }
-}

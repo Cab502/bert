@@ -1,11 +1,10 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
 
-module.exports = {
-    data: new SlashCommandBuilder()
+exports.data = new SlashCommandBuilder()
     .setName("miesmuschel")
     .setDescription("use if you need some guidance in your life")
     .addStringOption(option => option.setName("question").setDescription("ask a specific quetion, the miesmuschel should answer").setRequired(true)), 
-    async execute(interaction) {
+exports.execute = async (interaction) => {
         var advices = [
             "Du stinkst",
             "Nein",
@@ -40,4 +39,3 @@ module.exports = {
         var rand = Math.floor(Math.random()*advices.length)
         interaction.reply(`<:miesmuschel:988448308559216701> ${advices[rand]}`)
     }
-}

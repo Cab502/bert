@@ -9,15 +9,6 @@ const path = require("path")
 const { REST } = require("@discordjs/rest")
 const { Routes } = require("discord-api-types/v10")
 
-//Assemble and submit global commands
-const commands = []
-const commandFiles = fs.readdirSync("./src/commands").filter(file => file.endsWith(".js") && !path.basename(file).startsWith("_"))
-
-commandFiles.forEach(commandFile => {
-    const command = require(`./commands/${commandFile}`)
-    commands.push(command.data.toJSON())
-})
-
 //Create a new rest client instance
 const restClient =  new REST({ version: "10" }).setToken(process.env.DISCORD_BOT_TOKEN)
 
@@ -37,4 +28,49 @@ async function submitCommands(commands, guildname = "") {
         console.error(error);
     }
 }
+// #endregion
+
+// #region GLOBAL COMMANDS
+const commandFilesPath = path.join(__dirname, "commands");
+fs.readdir(commandFilesPath, (err, files) => {
+	if (err) throw err;
+
+	const globalCommandFiles = files.filter((file) => file.endsWith(".js") && !path.basename(file).startsWith("_"));
+
+	// Assemble and submit the global commands
+	const globalCommands = [];
+	globalCommandFiles.forEach(file => {
+		const command = require(path.join(commandFilesPath, file));
+		globalCommands.push(command.data.toJSON());
+	});
+	submitCommands(globalCommands);
+});
+// #endregion
+
+// #region GUILD COMMANDS
+fs.readdir(commandFilesPath, { withFileTypes: true }, (err, files) => {
+	if (err) throw err;
+
+	const guildCommandFolders = files.filter(dirent => dirent.isDirectory())
+		.map(dirent => dirent.name);
+
+	// Iterate over each guild command folder
+	guildCommandFolders.forEach(guildname => {
+
+		// Retrieve the guild command files
+		fs.readdir(path.join(commandFilesPath, guildname), (err, guildFiles) => {
+			if (err) throw err;
+
+			const guildCommandFiles = guildFiles.filter((file) => file.endsWith(".js") && !path.basename(file).startsWith("_"));
+
+			// Assemble and submit the commands
+			const guildCommands = [];
+			guildCommandFiles.forEach(file => {
+				const command = require(path.join(commandFilesPath, guildname, file));
+				guildCommands.push(command.data.toJSON());
+			});
+			submitCommands(guildCommands, guildname);
+		});
+	});
+});
 // #endregion
