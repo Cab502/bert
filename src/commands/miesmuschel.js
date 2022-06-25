@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
+const { MessageEmbed } = require("discord.js")
 
 exports.data = new SlashCommandBuilder()
     .setName("miesmuschel")
@@ -37,5 +38,10 @@ exports.execute = async (interaction) => {
 
         ]
         var rand = Math.floor(Math.random()*advices.length)
-        interaction.reply(`<:miesmuschel:988448308559216701> ${advices[rand]}`)
+        const inputQuestion = interaction.options.getString('question');
+
+        const embed = new MessageEmbed()
+            .addField(inputQuestion, `<:miesmuschel:988448308559216701> ${advices[rand]}`)
+
+        interaction.reply({ embeds: [embed] })
     }
