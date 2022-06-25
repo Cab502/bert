@@ -9,10 +9,6 @@ exports.execute = async (interaction) => {
             "Ist der Finger oben, wird man dich loben"
         ]
         var rand = Math.floor(Math.random()*advices.length)
-        const inputQuestion = interaction.options.getString('question');
 
-        const embed = new MessageEmbed()
-            .addField(inputQuestion, `${wisdom[rand]}`)
-
-        interaction.reply({ embeds: [embed] })
+        interaction.reply(wisdom[rand])
     }
