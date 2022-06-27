@@ -35,7 +35,6 @@ exports.execute = async (interaction) => {
             "Eines Tages vielleicht",
             "Keine Ahnung, im Zweifelsfall nimm Drogen",
             "Bin beschäftigt"
-
         ]
         var rand = Math.floor(Math.random()*advices.length)
         const inputQuestion = interaction.options.getString('question');
