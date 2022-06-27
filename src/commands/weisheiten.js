@@ -10,5 +10,5 @@ exports.execute = async (interaction) => {
         ]
         var rand = Math.floor(Math.random()*advices.length)
 
-        interaction.reply(wisdom[rand])
+        interaction.reply(`${wisdom[rand]}`)
     }
