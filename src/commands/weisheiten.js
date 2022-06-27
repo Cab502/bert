@@ -8,7 +8,7 @@ exports.execute = async (interaction) => {
         var wisdom = [
             "Ist der Finger oben, wird man dich loben"
         ]
-        var rand = Math.floor(Math.random()*advices.length)
+        var rand = Math.floor(Math.random()*wisdom.length)
 
         interaction.reply(`${wisdom[rand]}`)
     }
