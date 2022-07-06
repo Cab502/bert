@@ -10,6 +10,7 @@ exports.data = new SlashCommandBuilder()
                         .setDescription("Zeige Informationen über einen Member an")
                         .addUserOption(option => option.setName("member")
                         .setDescription("Der Member").setRequired(true))), 
+
 exports.execute = async (interaction) => {
         switch(interaction.options.getSubcommand()){
             case "server": {
