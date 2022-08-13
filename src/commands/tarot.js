@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const wisdom = require("../../assets/oogway/wisdom.json")
+const { MessageAttachment, MessageEmbed } = require("discord.js")
+const cards = require("../../assets/tarot/card_data.json")
 
 exports.data = new SlashCommandBuilder()
     .setName("tarot")
@@ -22,14 +23,26 @@ exports.data = new SlashCommandBuilder()
             .setRequired(true))*/
 
 exports.execute = async (interaction) => {
+    const cardsArr = cards.cards
+
     switch(interaction.options.getSubcommand()){
         case "help": {
             interaction.reply("coming soon")
             break
         }
         case "card": {
-            var card = getRandomCard()
-            interaction.reply(`${card}`)
+            var rand = Math.floor(Math.random()*cardsArr.length)
+            var card = cardsArr[rand]
+            var image = card.img
+
+            //send message
+            const file = new MessageAttachment(`assets/tarot/cards/${image}`)
+            const embed = new MessageEmbed()
+            .setTitle(card.name)
+            .setDescription(`Number: ${card.number}`)
+            .setImage(`attachment://${image}`)
+            
+            interaction.reply({ embeds: [embed], files: [file] })
             break
         }
         case "spread": {
@@ -41,7 +54,3 @@ exports.execute = async (interaction) => {
         }
     }
     }
-
-function getRandomCard(){
-    return "null"
-}
