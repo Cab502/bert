@@ -1,15 +1,12 @@
 //Require the necessary encironment variables
 require("dotenv").config()
 
-//Require the file system modules for dynamic command creation
 const fs = require("fs")
 const path = require("path")
 
-//Require the necessary discord.js classes
 const { REST } = require("@discordjs/rest")
 const { Routes } = require("discord-api-types/v10")
 
-//Create a new rest client instance
 const restClient =  new REST({ version: "10" }).setToken(process.env.DISCORD_BOT_TOKEN)
 
 // #region FUNCTIONS

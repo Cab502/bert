@@ -1,10 +1,8 @@
 //Require the necessary environment variables
 require("dotenv").config()
 
-//Require the necessary discord.js classes
 const { Client, Collection, Intents } = require("discord.js")
 
-//Require the file system modules for dynamic command creation
 const fs = require("fs")
 const path = require("path")
 

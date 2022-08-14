@@ -18,7 +18,7 @@ exports.data = new SlashCommandBuilder()
         .setName("explain")
         .setDescription("Gives you a detailed explanation to the card with the id you add. Only you can see the answer")
         .addStringOption(option => option
-            .setName("id-or-name")
+            .setName("card-name")
             .setDescription("Get an explanation of the card you have drawn")
             .setRequired(true)))
 
@@ -39,7 +39,6 @@ exports.execute = async (interaction) => {
             const file = new MessageAttachment(`assets/tarot/cards/${image}`)
             const embed = new MessageEmbed()
             .setTitle(card.name)
-            .setDescription(`Number: ${card.number}`)
             .setImage(`attachment://${image}`)
             
             interaction.reply({ embeds: [embed], files: [file] })
@@ -50,7 +49,26 @@ exports.execute = async (interaction) => {
             break
         }
         case "explain": {
-            interaction.reply("coming soon")
+            var inputName = interaction.options.getString('card-name').toLowerCase()
+            var card;
+
+            //suche richtige Karte
+            for(var i = 0; i < cardsArr.length; i++){
+                if(cardsArr[i].locaname === inputName){
+                    card = cardsArr[i]
+                    i = cardsArr.length
+                }
+            }
+
+            //send message
+            var image = card.img
+            const file = new MessageAttachment(`assets/tarot/cards/${image}`)
+            const embed = new MessageEmbed()
+            .setTitle(card.name)
+            .setImage(`attachment://${image}`)
+            
+            interaction.reply({ embeds: [embed], files: [file] })
+            break
         }
     }
     }
