@@ -16,11 +16,11 @@ exports.data = new SlashCommandBuilder()
         .setDescription("Gives you a selection of spreads to choose from"))
     .addSubcommand(subCommand => subCommand
         .setName("explain")
-        .setDescription("Gives you a detailed explanation to the card with the id you add"))
-        /*.addStringOption(option => option
-            .setName("id")
+        .setDescription("Gives you a detailed explanation to the card with the id you add. Only you can see the answer")
+        .addStringOption(option => option
+            .setName("id-or-name")
             .setDescription("Get an explanation of the card you have drawn")
-            .setRequired(true))*/
+            .setRequired(true)))
 
 exports.execute = async (interaction) => {
     const cardsArr = cards.cards
