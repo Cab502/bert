@@ -65,7 +65,10 @@ exports.execute = async (interaction) => {
             const file = new MessageAttachment(`assets/tarot/cards/${image}`)
             const embed = new MessageEmbed()
             .setTitle(card.name)
-            .setImage(`attachment://${image}`)
+            .setThumbnail(`attachment://${image}`)
+            .addFields(
+                { name: "*" + card.description + "*", value: card.longmeaning },
+            )
             
             interaction.reply({ embeds: [embed], files: [file] })
             break
