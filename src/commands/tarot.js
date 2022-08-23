@@ -42,6 +42,8 @@ exports.execute = async (interaction) => {
             .setImage(`attachment://${image}`)
             
             interaction.reply({ embeds: [embed], files: [file] })
+            const msg = await interaction.fetchReply()
+            msg.react('💬')
             break
         }
         case "spread": {
@@ -69,7 +71,6 @@ exports.execute = async (interaction) => {
             .addFields(
                 { name: "*" + card.description + "*", value: card.longmeaning },
             )
-            
             interaction.reply({ embeds: [embed], files: [file] })
             break
         }
