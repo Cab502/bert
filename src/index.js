@@ -1,13 +1,13 @@
 //Require the necessary environment variables
 require("dotenv").config()
 
-const { Client, Collection, Intents } = require("discord.js")
+const { Client, Collection, GatewayIntentBits, InteractionType } = require("discord.js")
 
 const fs = require("fs")
 const path = require("path")
 
 //Create a new client instance and a commands collection
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
+const client = new Client({ intents: [GatewayIntentBits.Guilds] })
 client.commands = new Collection()
 
 // Recursively retrieve files (credits to https://stackoverflow.com/users/5551941/wyattis)
@@ -54,8 +54,8 @@ client.once("ready", () => {
     client.user.setActivity({name: "pornhub.com", type: "WATCHING"})
 })
 
-client.on("interaction", async (interaction) => {
-    if(!interaction.isCommand()) return
+client.on("interactionCreate", async interaction => {
+    if(!interaction.isChatInputCommand) return
     
     const command = client.commands.get(interaction.commandName)
 

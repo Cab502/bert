@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { MessageAttachment, MessageEmbed } = require("discord.js")
+const { AttachmentBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js")
 const cards = require("../../assets/tarot/card_data.json")
 
 exports.data = new SlashCommandBuilder()
@@ -31,19 +31,24 @@ exports.execute = async (interaction) => {
             break
         }
         case "card": {
+            const row = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('description')
+                        .setLabel('Description')
+                        .setStyle(ButtonStyle.Primary),
+                )
             var rand = Math.floor(Math.random()*cardsArr.length)
             var card = cardsArr[rand]
             var image = card.img
 
             //send message
-            const file = new MessageAttachment(`assets/tarot/cards/${image}`)
-            const embed = new MessageEmbed()
+            const file = new AttachmentBuilder(`assets/tarot/cards/${image}`)
+            const embed = new EmbedBuilder()
             .setTitle(card.name)
             .setImage(`attachment://${image}`)
             
-            interaction.reply({ embeds: [embed], files: [file] })
-            const msg = await interaction.fetchReply()
-            msg.react('💬')
+            await interaction.reply({ embeds: [embed], files: [file], components: [row] })
             break
         }
         case "spread": {
@@ -64,8 +69,8 @@ exports.execute = async (interaction) => {
 
             //send message
             var image = card.img
-            const file = new MessageAttachment(`assets/tarot/cards/${image}`)
-            const embed = new MessageEmbed()
+            const file = new AttachmentBuilder(`assets/tarot/cards/${image}`)
+            const embed = new EmbedBuilder()
             .setTitle(card.name)
             .setThumbnail(`attachment://${image}`)
             .addFields(

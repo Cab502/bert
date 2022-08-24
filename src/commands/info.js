@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { MessageEmbed } = require("discord.js")
+const { EmbedBuilder } = require("discord.js")
 
 exports.data = new SlashCommandBuilder()
     .setName("info")
@@ -15,7 +15,7 @@ exports.execute = async (interaction) => {
         switch(interaction.options.getSubcommand()){
             case "server": {
                 interaction.reply({embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                     .setTitle(`Information für den Server ${interaction.guild.name}`)
                     .addFields([
                         {
@@ -35,7 +35,7 @@ exports.execute = async (interaction) => {
             case "member": {
                 const member = interaction.options.getMember("member")
                 interaction.reply({embeds: [
-                    new MessageEmbed()
+                    new EmbedBuilder()
                     .setTitle(`Information über ${member.user.tag}`)
                     .setThumbnail(member.user.avatarURL({dynamic: true}))
                     .addFields([

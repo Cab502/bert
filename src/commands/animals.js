@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders")
-const { MessageAttachment, MessageEmbed } = require("discord.js")
+const { AttachmentBuilder, EmbedBuilder } = require("discord.js")
 const request = require('request')
 
 exports.data = new SlashCommandBuilder()
@@ -13,8 +13,8 @@ exports.data = new SlashCommandBuilder()
         switch(interaction.options.getSubcommand()){
             case "cutecat": {
                 const number =  Math.floor(Math.random()*44)
-                const file = new MessageAttachment(`assets/cats/${number}.jpg`)
-                const embed = new MessageEmbed()
+                const file = new AttachmentBuilder(`assets/cats/${number}.jpg`)
+                const embed = new EmbedBuilder()
                     .setImage(`attachment://${number}.jpg`)
 
                 interaction.reply({ embeds: [embed], files: [file] })
@@ -22,8 +22,8 @@ exports.data = new SlashCommandBuilder()
             }
             case "flamingo": {
                 const number =  Math.floor(Math.random()*31)
-                const file = new MessageAttachment(`assets/flamingos/${number}.jpg`)
-                const embed = new MessageEmbed()
+                const file = new AttachmentBuilder(`assets/flamingos/${number}.jpg`)
+                const embed = new EmbedBuilder()
                     .setImage(`attachment://${number}.jpg`)
 
                 interaction.reply({ embeds: [embed], files: [file] })
@@ -36,7 +36,7 @@ exports.data = new SlashCommandBuilder()
                         if(err) console.log(error)
             
                         const url = body.substring(body.indexOf('http'), body.indexOf('</url>'))
-                        const embed = new MessageEmbed()
+                        const embed = new EmbedBuilder()
                         .setImage(`${url}`)
                         
                         interaction.reply({ embeds: [embed] })
